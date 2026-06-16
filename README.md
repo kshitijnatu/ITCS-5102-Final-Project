@@ -253,33 +253,95 @@ curl -X DELETE http://localhost:3000/students/1
 
 | Technology | Purpose |
 |------------|---------|
-| [Go](https://go.dev/) | Language and runtime |
+| [Go 1.22+](https://go.dev/) | Language and runtime |
 | [net/http](https://pkg.go.dev/net/http) | Standard library HTTP server |
 | [encoding/json](https://pkg.go.dev/encoding/json) | JSON encoding/decoding |
 
-### Planned Setup
+### Project Structure
+
+```
+go-CRUD/
+├── main.go    # Student model, in-memory store, routes, and handlers
+└── go.mod
+```
+
+### Setup
+
+Requires [Go 1.22 or later](https://go.dev/dl/) (uses Go 1.22+ route patterns like `GET /students/{id}`).
 
 ```bash
 cd go-CRUD
-go mod init go-crud
+go mod download
 ```
 
-### Planned Run
+### Run
 
 ```bash
 go run main.go
 ```
 
-The server will run at **http://localhost:8080** (or another configured port).
+The server starts at **http://localhost:8080**.
 
-### Status
+> If port 8080 is already in use, stop the other process (`lsof -ti :8080 | xargs kill`) or change the port in `main.go`.
 
-> **Not yet implemented.** This directory is reserved for the Go version of the student CRUD API.
+### Example Requests
+
+**Create a student:**
+
+```bash
+curl -X POST http://localhost:8080/students \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": 4,
+    "name": "Alice Smith",
+    "email": "alice.smith@university.edu",
+    "student_id": "S1004",
+    "major": "Physics",
+    "year": "Freshman",
+    "gpa": 3.8,
+    "enrollment_date": "2025-08-15"
+  }'
+```
+
+**Get all students:**
+
+```bash
+curl http://localhost:8080/students
+```
+
+**Get one student:**
+
+```bash
+curl http://localhost:8080/students/1
+```
+
+**Update a student:**
+
+```bash
+curl -X PUT http://localhost:8080/students/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@university.edu",
+    "student_id": "S1001",
+    "major": "Computer Science",
+    "year": "Junior",
+    "gpa": 3.8,
+    "enrollment_date": "2024-08-15"
+  }'
+```
+
+**Delete a student:**
+
+```bash
+curl -X DELETE http://localhost:8080/students/1
+```
 
 ---
 
 ## Notes
 
 - All implementations use an **in-memory** data store. Data is lost when the server restarts.
-- CORS is enabled on the Python and TypeScript implementations to allow cross-origin requests from front-end clients.
+- CORS is enabled on the Python, TypeScript, and Go implementations to allow cross-origin requests from front-end clients.
 - Each service should run on a **different port** if you start more than one at the same time.
