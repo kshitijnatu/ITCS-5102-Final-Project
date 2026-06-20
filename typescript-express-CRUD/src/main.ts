@@ -9,9 +9,36 @@ app.use(cors());
 app.use(express.json());
 
 const students: Student[] = [
-  { id: 1, name: "John Doe", email: "john.doe@university.edu", student_id: "S1001", major: "Computer Science", year: "Sophomore", gpa: 3.7, enrollment_date: "2024-08-15" },
-  { id: 2, name: "Jane Doe", email: "jane.doe@university.edu", student_id: "S1002", major: "Biology", year: "Junior", gpa: 3.9, enrollment_date: "2023-08-15" },
-  { id: 3, name: "Jim Doe", email: "jim.doe@university.edu", student_id: "S1003", major: "Mathematics", year: "Senior", gpa: 3.5, enrollment_date: "2022-08-15" },
+  { 
+    id: 1, 
+    name: "John Doe", 
+    email: "john.doe@university.edu", 
+    student_id: "S1001", 
+    major: "Computer Science", 
+    year: "Sophomore", 
+    gpa: 3.7, 
+    enrollment_date: "2024-08-15" 
+  },
+  { 
+    id: 2, 
+    name: "Jane Doe", 
+    email: "jane.doe@university.edu", 
+    student_id: "S1002", 
+    major: "Biology", 
+    year: "Junior", 
+    gpa: 3.9, 
+    enrollment_date: "2023-08-15" 
+  },
+  { 
+    id: 3, 
+    name: "Jim Doe", 
+    email: "jim.doe@university.edu", 
+    student_id: "S1003", 
+    major: "Mathematics", 
+    year: "Senior", 
+    gpa: 3.5, 
+    enrollment_date: "2022-08-15" 
+  },
 ];
 
 app.get("/", (req: Request, res: Response) => {
