@@ -35,10 +35,29 @@ All implementations use the same student fields:
 ```
 Final_Project/
 ├── python-fastapi-CRUD/     # Python + FastAPI implementation
+│   └── benchmark.py         # Performance load-test client
 ├── typescript-express-CRUD/ # TypeScript + Express implementation
+│   └── src/benchmark.ts     # Performance load-test client
 ├── go-CRUD/                 # Go implementation
+│   └── benchmark/           # Performance load-test client
 └── README.md
 ```
+
+---
+
+## Performance Comparison
+
+Each language has its own benchmark client that sends concurrent `GET /students` requests to measure throughput and latency. Run **one server at a time**, then run its matching benchmark in a second terminal.
+
+| Language   | Port | Benchmark file              |
+|------------|------|-----------------------------|
+| Go         | 8080 | `go-CRUD/benchmark/main.go` |
+| Python     | 8000 | `python-fastapi-CRUD/benchmark.py` |
+| TypeScript | 3000 | `typescript-express-CRUD/src/benchmark.ts` |
+
+**Defaults:** 10,000 requests, 50 concurrent workers, endpoint `GET /students`
+
+**Metrics to compare:** Requests/sec (higher is faster), avg latency, p95 latency (lower is faster)
 
 ---
 
@@ -79,6 +98,28 @@ python main.py
 ```
 
 The server starts at **http://localhost:8000**.
+
+### Performance Benchmark
+
+```bash
+# Terminal 1
+uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Terminal 2
+python benchmark.py
+```
+
+**Results** (10,000 requests, 50 concurrent workers, `GET /students`):
+
+```
+Language:     Python (FastAPI client)
+URL:          http://localhost:8000/students
+Duration:     5.361s
+Requests/sec: 1865.35
+Successful:   10000
+Failed:       0
+Avg latency:  ~26ms
+```
 
 ### API Documentation
 
@@ -189,6 +230,28 @@ The server starts at **http://localhost:3000**.
 
 > If port 3000 is already in use, stop the other process (`lsof -ti :3000 | xargs kill`) or change the `PORT` constant in `src/main.ts`.
 
+### Performance Benchmark
+
+```bash
+# Terminal 1
+npm run build && npm start
+
+# Terminal 2
+npm run benchmark
+```
+
+**Results** (10,000 requests, 50 concurrent workers, `GET /students`):
+
+```
+Language:     TypeScript (Express client)
+URL:          http://localhost:3000/students
+Duration:     0.857s
+Requests/sec: 11667.65
+Successful:   10000
+Failed:       0
+Avg latency:  ~2ms
+```
+
 ### Example Requests
 
 **Create a student:**
@@ -261,7 +324,9 @@ curl -X DELETE http://localhost:3000/students/1
 
 ```
 go-CRUD/
-├── main.go    # Student model, in-memory store, routes, and handlers
+├── main.go
+├── benchmark/
+│   └── main.go
 └── go.mod
 ```
 
@@ -283,6 +348,28 @@ go run main.go
 The server starts at **http://localhost:8080**.
 
 > If port 8080 is already in use, stop the other process (`lsof -ti :8080 | xargs kill`) or change the port in `main.go`.
+
+### Performance Benchmark
+
+```bash
+# Terminal 1
+go run main.go
+
+# Terminal 2
+cd benchmark && go run .
+```
+
+**Results** (10,000 requests, 50 concurrent workers, `GET /students`):
+
+```
+Language:     Go
+URL:          http://localhost:8080/students
+Duration:     295ms
+Requests/sec: 33937.99
+Successful:   10000
+Failed:       0
+Avg latency:  1.42ms
+```
 
 ### Example Requests
 
