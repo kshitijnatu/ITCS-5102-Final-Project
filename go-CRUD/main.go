@@ -19,9 +19,31 @@ type Student struct {
 }
 
 var students = []Student{
-	{ID: 1, Name: "John Doe", Email: "john.doe@university.edu", StudentID: "S1001", Major: "Computer Science", Year: "Sophomore", GPA: 3.7, EnrollmentDate: "2024-08-15"},
-	{ID: 2, Name: "Jane Doe", Email: "jane.doe@university.edu", StudentID: "S1002", Major: "Biology", Year: "Junior", GPA: 3.9, EnrollmentDate: "2023-08-15"},
-	{ID: 3, Name: "Jim Doe", Email: "jim.doe@university.edu", StudentID: "S1003", Major: "Mathematics", Year: "Senior", GPA: 3.5, EnrollmentDate: "2022-08-15"},
+	{
+		ID: 1, 
+		Name: "John Doe", 
+		Email: "john.doe@university.edu", 
+		StudentID: "S1001", 
+		Major: "Computer Science", 
+		Year: "Sophomore", 
+		GPA: 3.7, 
+		EnrollmentDate: "2024-08-15"},
+	{ID: 2, 
+		Name: "Jane Doe", 
+		Email: "jane.doe@university.edu", 
+		StudentID: "S1002", 
+		Major: "Biology", 
+		Year: "Junior", 
+		GPA: 3.9, 
+		EnrollmentDate: "2023-08-15"},
+	{ID: 3, 
+		Name: "Jim Doe", 
+		Email: "jim.doe@university.edu", 
+		StudentID: "S1003", 
+		Major: "Mathematics", 
+		Year: "Senior", 
+		GPA: 3.5, 
+		EnrollmentDate: "2022-08-15"},
 }
 
 func main() {
